@@ -21,6 +21,7 @@ const initialApplications = [
 
 export default function Applications() {
   const [applications, setApplications] = useState(initialApplications);
+  const [filter, setFilter] = useState("default");
 
   const setStatus = function (newStatus, email) {
     setApplications((previousApplications) =>
@@ -32,10 +33,24 @@ export default function Applications() {
     );
   };
 
+  const filteredAplications =
+    filter === "default"
+      ? applications
+      : applications.filter((item) => item.status === filter);
+
   return (
     <div>
+      <select
+        value={filter}
+        onChange={(event) => setFilter(event.target.value)}
+      >
+        <option value="default">Default</option>
+        <option value="accepted">Acceepted</option>
+        <option value="declined">Declined</option>
+        <option value="pending">Pending</option>
+      </select>
       <ul>
-        {applications.map((item) => (
+        {filteredAplications.map((item) => (
           <li key={item.email}>
             {item.fullName}
             {item.email}
