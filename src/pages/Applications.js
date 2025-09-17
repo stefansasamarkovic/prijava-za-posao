@@ -1,82 +1,88 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const initialApplications = [
-  {
-    fullName: "Petar Petrovic",
-    email: "petarpetrovic@gmail.com",
-    phone: "+381 60 1234567",
-    company: "Oktopeak",
-    position: "Junior Front-end developer",
-    status: "pending",
-  },
-  {
-    fullName: "Marko Markovic",
-    email: "markomarkovic@gmail.com",
-    phone: "+381 61 1231234",
-    company: "Oktopeak",
-    position: "Junior Front-end developer",
-    status: "declined",
-  },
-  {
-    fullName: "Bogdan Bogdanovic",
-    email: "bogdanbogdanovic@gmail.com",
-    phone: "+381 62 3215649",
-    company: "Oktopeak",
-    position: "Junior Front-end developer",
-    status: "declined",
-  },
-  {
-    fullName: "Stefan Stefanovic",
-    email: "stefanstefanovic@gmail.com",
-    phone: "+381 63 3835649",
-    company: "Oktopeak",
-    position: "Junior Front-end developer",
-    status: "accepted",
-  },
-  {
-    fullName: "Jovan Jovanovic",
-    email: "jovanjovanovic@gmail.com",
-    phone: "+381 64 3219649",
-    company: "Oktopeak",
-    position: "Junior Front-end developer",
-    status: "declined",
-  },
-  {
-    fullName: "Ivan Ivanovic",
-    email: "ivanivanovic@gmail.com",
-    phone: "+381 65 0355649",
-    company: "Oktopeak",
-    position: "Junior Front-end developer",
-    status: "pending",
-  },
-  {
-    fullName: "Ana Ivanovic",
-    email: "anaivanovic@gmail.com",
-    phone: "+381 65 0355229",
-    company: "Oktopeak",
-    position: "Junior Front-end developer",
-    status: "pending",
-  },
-  {
-    fullName: "Milica Petrovic",
-    email: "milicapetrovic@gmail.com",
-    phone: "+381 65 0314649",
-    company: "Oktopeak",
-    position: "Junior Front-end developer",
-    status: "pending",
-  },
-  {
-    fullName: "Kristina Smiljanic",
-    email: "kristinasmiljanic@gmail.com",
-    phone: "+381 65 1855649",
-    company: "Oktopeak",
-    position: "Junior Front-end developer",
-    status: "pending",
-  },
-];
+// const initialApplications = [
+//   {
+//     fullName: "Petar Petrovic",
+//     email: "petarpetrovic@gmail.com",
+//     phone: "+381 60 1234567",
+//     company: "Oktopeak",
+//     position: "Junior Front-end developer",
+//     status: "pending",
+//   },
+//   {
+//     fullName: "Marko Markovic",
+//     email: "markomarkovic@gmail.com",
+//     phone: "+381 61 1231234",
+//     company: "Oktopeak",
+//     position: "Junior Front-end developer",
+//     status: "declined",
+//   },
+//   {
+//     fullName: "Bogdan Bogdanovic",
+//     email: "bogdanbogdanovic@gmail.com",
+//     phone: "+381 62 3215649",
+//     company: "Oktopeak",
+//     position: "Junior Front-end developer",
+//     status: "declined",
+//   },
+//   {
+//     fullName: "Stefan Stefanovic",
+//     email: "stefanstefanovic@gmail.com",
+//     phone: "+381 63 3835649",
+//     company: "Oktopeak",
+//     position: "Junior Front-end developer",
+//     status: "accepted",
+//   },
+//   {
+//     fullName: "Jovan Jovanovic",
+//     email: "jovanjovanovic@gmail.com",
+//     phone: "+381 64 3219649",
+//     company: "Oktopeak",
+//     position: "Junior Front-end developer",
+//     status: "declined",
+//   },
+//   {
+//     fullName: "Ivan Ivanovic",
+//     email: "ivanivanovic@gmail.com",
+//     phone: "+381 65 0355649",
+//     company: "Oktopeak",
+//     position: "Junior Front-end developer",
+//     status: "pending",
+//   },
+//   {
+//     fullName: "Ana Ivanovic",
+//     email: "anaivanovic@gmail.com",
+//     phone: "+381 65 0355229",
+//     company: "Oktopeak",
+//     position: "Junior Front-end developer",
+//     status: "pending",
+//   },
+//   {
+//     fullName: "Milica Petrovic",
+//     email: "milicapetrovic@gmail.com",
+//     phone: "+381 65 0314649",
+//     company: "Oktopeak",
+//     position: "Junior Front-end developer",
+//     status: "pending",
+//   },
+//   {
+//     fullName: "Kristina Smiljanic",
+//     email: "kristinasmiljanic@gmail.com",
+//     phone: "+381 65 1855649",
+//     company: "Oktopeak",
+//     position: "Junior Front-end developer",
+//     status: "pending",
+//   },
+// ];
 
 export default function Applications() {
-  const [applications, setApplications] = useState(initialApplications);
+  const [applications, setApplications] = useState(
+    JSON.parse(
+      window.localStorage.getItem("applications")
+        ? window.localStorage.getItem("applications")
+        : "[]"
+    )
+  );
   const [filter, setFilter] = useState("default");
 
   const setStatus = (newStatus, email) => {
@@ -93,6 +99,10 @@ export default function Applications() {
     filter === "default"
       ? applications
       : applications.filter((item) => item.status === filter);
+
+  useEffect(() => {
+    window.localStorage.setItem("applications", JSON.stringify(applications));
+  }, [applications]);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">

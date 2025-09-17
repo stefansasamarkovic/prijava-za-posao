@@ -1,12 +1,21 @@
 import React from "react";
 
-export default function Field({ type, name, placeholder, label }) {
+export default function Field({
+  type,
+  name,
+  placeholder,
+  label,
+  value,
+  setValue,
+}) {
   return (
     <div className="flex flex-col space-y-1">
       <label htmlFor={name} className="text-sm font-medium text-gray-700">
         {label}:
       </label>
       <input
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
         type={type}
         name={name}
         placeholder={placeholder}
