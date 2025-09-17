@@ -3,8 +3,11 @@ import Field from "./Field";
 
 export default function Form() {
   return (
-    <div>
-      <form>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      <form className="w-full max-w-md bg-white shadow-lg rounded-2xl p-8 space-y-6">
+        <h2 className="text-2xl font-semibold text-gray-800 text-center">
+          Prijava
+        </h2>
         <Field
           type="text"
           name="full-name"
@@ -35,7 +38,12 @@ export default function Form() {
           placeholder="Junior Front-end developer"
           label="Pozicija"
         />
-        <button>Submit</button>
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl shadow-md transition duration-200"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
