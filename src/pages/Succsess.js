@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import OpenAI from "openai";
 
@@ -15,27 +15,34 @@ export default function Succsess() {
     dangerouslyAllowBrowser: true,
   });
 
+  const calledRef = useRef(false);
+
   const getSuccessMessage = async function () {
     const response = await client.responses.create({
       model: "gpt-5",
-      input: `Napisi zahvalnicu za prijavu za posao. Naziv korisnika koji je poslao prijavu je ${fullName}`,
+      input: `Napisi zahvalnicu za prijavu za posao. Ime kandidata je ${fullName}`,
     });
 
     if (response.output_text) {
       setSuccessMessage(response.output_text);
     } else {
-      // setovanje lokalne poruke
+      setSuccessMessage(
+        `Napisi zahvalnicu za prijavu za posao. Naziv korisnika koji je poslao prijavu je ${fullName}`
+      );
     }
 
     setLoading(false);
   };
 
   useEffect(() => {
-    getSuccessMessage();
-  });
+    if (!calledRef.current) {
+      calledRef.current = true;
+      getSuccessMessage();
+    }
+  }, []);
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-50">
       <div className="max-w-xl p-8 bg-white rounded-2xl shadow-lg border border-gray-200">
         {loading ? (
           <div className="flex flex-col items-center">
