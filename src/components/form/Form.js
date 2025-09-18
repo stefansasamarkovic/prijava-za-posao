@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Field from "./Field";
+import { useNavigate } from "react-router-dom";
 
 export default function Form() {
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -52,7 +54,7 @@ export default function Form() {
 
     window.localStorage.setItem("applications", JSON.stringify(applications));
 
-    alert("Submit successful");
+    navigate(`/success?fullName=${fullName}`);
   };
 
   return (
